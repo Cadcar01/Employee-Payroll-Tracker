@@ -1,25 +1,39 @@
 // Get a reference to the #add-employees-btn element
 const addEmployeesBtn = document.querySelector('#add-employees-btn');
+const employeesArray = []
 
 // Collect employee data
-const collectEmployees = function() {
+const collectEmployees = function () {
   // TODO: Get user input to create and return an array of employee objects
-  prompt("Enter First Name")
-  prompt("Enter Last Name")
-  prompt("Enter Salary")
-  confirm("Add Another?")
-  if ("Add Another" === true) {
+  const employee = {
+    firstName: prompt("Enter First Name"),
+    lastName: prompt("Enter Last Name"),
+    salary: parseInt(prompt("Enter Salary"))
+  }
+
+  employeesArray.push(employee)
+  if (confirm('Add Another?') === true) {
     collectEmployees()
-  } else {return}
+  }
+  return employeesArray
 }
 
 // Display the average salary
-const displayAverageSalary = function(employeesArray) {
+const displayAverageSalary = function (employeesArray) {
+  const salaryArray = []
   // TODO: Calculate and display the average salary
+  for (let i = 0; i < employeesArray.length; i++) {
+    const salary = employeesArray[i].salary
+    salaryArray.push(salary)
+  }
+  console.log(salaryArray)
+  const arraySum = salaryArray.reduce((a, b) => a + b, 0)
+  console.log(salaryArray.length)
+  return arraySum / salaryArray.length
 }
 
 // Select a random employee
-const getRandomEmployee = function(employeesArray) {
+const getRandomEmployee = function (employeesArray) {
   // TODO: Select and display a random employee
 }
 
@@ -30,7 +44,7 @@ const getRandomEmployee = function(employeesArray) {
 */
 
 // Display employee data in an HTML table
-const displayEmployees = function(employeesArray) {
+const displayEmployees = function (employeesArray) {
   // Get the employee table
   const employeeTable = document.querySelector('#employee-table');
 
@@ -53,9 +67,9 @@ const displayEmployees = function(employeesArray) {
 
     const salaryCell = document.createElement("td");
     // Format the salary as currency
-    salaryCell.textContent = currentEmployee.salary.toLocaleString("en-US",{
-      style:"currency",
-      currency:"USD"
+    salaryCell.textContent = currentEmployee.salary.toLocaleString("en-US", {
+      style: "currency",
+      currency: "USD"
     });
 
     newTableRow.append(salaryCell);
@@ -64,7 +78,7 @@ const displayEmployees = function(employeesArray) {
   }
 }
 
-const trackEmployeeData = function() {
+const trackEmployeeData = function () {
   const employees = collectEmployees();
 
   console.table(employees);
@@ -75,7 +89,7 @@ const trackEmployeeData = function() {
 
   getRandomEmployee(employees);
 
-  employees.sort(function(a,b) {
+  employees.sort(function (a, b) {
     if (a.lastName < b.lastName) {
       return -1;
     } else {
