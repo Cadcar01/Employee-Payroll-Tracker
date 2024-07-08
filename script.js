@@ -10,7 +10,9 @@ const collectEmployees = function () {
     lastName: prompt("Enter Last Name"),
     salary: parseInt(prompt("Enter Salary"))
   }
-
+  if (isNaN(employee.salary)) {
+    employee.salary = 0
+  }
   employeesArray.push(employee)
   if (confirm('Add Another?') === true) {
     collectEmployees()
@@ -28,13 +30,29 @@ const displayAverageSalary = function (employeesArray) {
   }
   console.log(salaryArray)
   const arraySum = salaryArray.reduce((a, b) => a + b, 0)
-  console.log(salaryArray.length)
-  return arraySum / salaryArray.length
+  const average = arraySum / employeesArray.length
+  const newAvg = average.toLocaleString("en-US", {
+    style: "currency",
+    currency: "USD"
+  })
+  console.log(`the average salary between the ${employeesArray.length} employees listed is ${newAvg}`)
+
+  return average
 }
 
 // Select a random employee
 const getRandomEmployee = function (employeesArray) {
   // TODO: Select and display a random employee
+  function getRandomInt(min, maxi) {
+    const minCeiled = Math.ceil(min);
+    const maxFloored = Math.floor(maxi);
+    return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled)
+  }
+  const max = employeesArray.length
+  const rand = employeesArray[getRandomInt(0, max)]
+  console.log(`${rand.firstName} ${rand.lastName} has won the random drawing`)
+
+  return employeesArray[rand]
 }
 
 /*
